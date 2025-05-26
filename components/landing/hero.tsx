@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Spotlight } from "../ui/spotlight-new";
-import { StarsBackground } from "../ui/stars-background";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -25,7 +24,9 @@ export default function Hero() {
           </h1>
           
 
-          <p className="text-lg mt-3">Automate your customer service, significantly boost sales, and gather crucial insights. With Chatpoka's powerful AI engine, you can build, customize, and launch sophisticated chatbots—no coding required.</p>
+          <p className="text-lg mt-3">
+            Automate your customer service, significantly boost sales, and gather crucial insights. With Chatpoka&apos;s powerful AI engine, you can build, customize, and launch sophisticated chatbots—no coding required.
+          </p>
 
         </div>
 
