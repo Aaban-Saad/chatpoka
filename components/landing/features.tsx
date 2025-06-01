@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 
 export default function Features() {
   return (
-    <section className="max-w-screen-2xl mx-auto px-5 md:px-16 ">
-      <div>
+    <section className="max-w-screen-2xl mx-auto px-5 md:px-16">
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <Badge className="rounded-full" variant={"secondary"}>Features</Badge>
           <h1 className="font-bold text-4xl">AI Agents for Smoother Customer Experiences</h1>
@@ -38,7 +37,6 @@ export default function Features() {
             </Card>
           </div>
         </div>
-      </div>
     </section >
   );
 
