@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section>
+    <section className="max-w-screen-2xl mx-auto">
 
       <span className="hidden md:block">
         <Spotlight />
@@ -16,7 +16,7 @@ export default function Hero() {
         <div>
 
           <h1 className="font-bold text-6xl">
-            <span className="bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-rose-400 to-indigo-600 bg-clip-text text-transparent">
               Automate{" "}
             </span>
             your business with

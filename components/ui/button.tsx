@@ -22,7 +22,7 @@ const buttonVariants = cva(
         link: 
           "text-primary underline-offset-4 hover:underline",
         hero: 
-          "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg hover:from-green-600 hover:to-emerald-700 transition-all flex items-center gap-2",
+          "bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-lg hover:from-sky-600 hover:to-indigo-700 transition-all flex items-center gap-2",
       },
       size: {
         default: "h-9 px-4 py-2",
