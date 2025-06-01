@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="max-w-screen-2xl mx-auto mt-36 px-5 md:px-16 ">
+    <section className="max-w-screen-2xl mx-auto mt-24 md:mt-36 px-5 md:px-16 ">
 
       <span className="hidden md:block">
         <Spotlight />
