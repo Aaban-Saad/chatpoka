@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
             />
           </Link>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 ">
           <Link
             href="/features"
             className="px-4 py-2 rounded hover:bg-primary-100 transition-colors"
