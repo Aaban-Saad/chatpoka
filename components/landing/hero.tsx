@@ -7,9 +7,9 @@ export default function Hero() {
   return (
     <section className="max-w-screen-2xl mx-auto mt-24 md:mt-36 px-5 md:px-16 ">
 
-      <span className="hidden md:block">
+      {/* <span className="hidden md:block"> */}
         <Spotlight />
-      </span>
+      {/* </span> */}
 
       <div className="flex flex-col lg:flex-row items-center justify-center sm:items-start gap-4 text-center sm:text-left">
 

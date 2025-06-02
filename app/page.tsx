@@ -9,7 +9,7 @@ import { StarsBackground } from "@/components/ui/stars-background";
 export default function Home() {
   return (
     <>
-      <ScrollArea className="w-screen h-screen z-10 font-[family-name:var(--font-geist-sans)]">
+      <ScrollArea className="h-screen z-10 font-[family-name:var(--font-geist-sans)]">
         <Navbar />
 
         <main className="flex flex-col gap-24 items-center sm:items-start">

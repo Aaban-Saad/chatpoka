@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
             About
           </Link>
           <Link
-            href="/login"
+            href="/auth"
             className="px-4 py-2 rounded bg-primary-primary text-white hover:bg-primary-700 transition-colors"
           >
             <Button variant="hero" className="rounded-full font-semibold">
