@@ -1,13 +1,12 @@
 import React from "react";
-import Link from "next/link";
 import { SidebarTrigger } from "../ui/sidebar";
 
-const navItems = [
-    { name: "Home", href: "/dashboard" },
-    { name: "Profile", href: "/dashboard/profile" },
-    { name: "Settings", href: "/dashboard/settings" },
-    { name: "Logout", href: "/logout" },
-];
+// const navItems = [
+//     { name: "Home", href: "/dashboard" },
+//     { name: "Profile", href: "/dashboard/profile" },
+//     { name: "Settings", href: "/dashboard/settings" },
+//     { name: "Logout", href: "/logout" },
+// ];
 
 const Navbar: React.FC = () => (
     <nav className="w-full py-2 bg-sidebar flex items-center justify-between px-5 border-b md:rounded-t-lg border">
