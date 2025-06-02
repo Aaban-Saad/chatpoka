@@ -2,13 +2,14 @@ import Image from "next/image";
 import { Spotlight } from "../ui/spotlight-new";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
     <section className="max-w-screen-2xl mx-auto mt-24 md:mt-36 px-5 md:px-16 ">
 
       {/* <span className="hidden md:block"> */}
-        <Spotlight />
+      <Spotlight />
       {/* </span> */}
 
       <div className="flex flex-col lg:flex-row items-center justify-center sm:items-start gap-4 text-center sm:text-left">
@@ -26,14 +27,16 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col md:flex-row items-center gap-3">
-            <Button
-              size="lg"
-              variant="hero"
-              className="rounded-full font-semibold"
-            >
-              Get Started Today
-              <ArrowRight className="w-5 h-5 ml-1" />
-            </Button>
+            <Link href="/signin">
+              <Button
+                size="lg"
+                variant="hero"
+                className="rounded-full font-semibold"
+              >
+                Get Started Today
+                <ArrowRight className="w-5 h-5 ml-1" />
+              </Button>
+            </Link>
 
             <Button
               size="lg"
