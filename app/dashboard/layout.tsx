@@ -16,7 +16,7 @@ export default function DashboardLayout({
         <div className="md:pt-2 md:pr-2 w-full flex-shrink-0">
           <Navbar />
         </div>
-        <div className="flex-1 min-h-0 pb-16 md:pb-0">
+        <div className="flex-1 min-h-0">
           <ScrollArea className="h-full w-full">
             <div className="">{children}</div>
           </ScrollArea>
