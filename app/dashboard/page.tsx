@@ -158,11 +158,10 @@ export default function Dashboard() {
             <CardDescription>Latest conversations across all agents</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
+            <Table className="text-xs">
               <TableHeader>
                 <TableRow>
                   <TableHead>Agent</TableHead>
-                  <TableHead>User</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Messages</TableHead>
                   <TableHead>Started</TableHead>
@@ -171,13 +170,13 @@ export default function Dashboard() {
               <TableBody>
                 {mockData.recentSessions.map((session) => (
                   <TableRow key={session._id}>
-                    <TableCell className="font-medium">{session.agentName}</TableCell>
-                    <TableCell>{session.userName}</TableCell>
-                    <TableCell>
-                      <Badge variant={session.status === "active" ? "default" : "secondary"}>{session.status}</Badge>
+                    <TableCell className="font-medium p-1">{session.agentName}</TableCell>
+
+                    <TableCell className="p-1">
+                      <Badge className="px-1" variant={session.status === "active" ? "default" : "secondary"}>{session.status}</Badge>
                     </TableCell>
                     <TableCell>{session.messageCount}</TableCell>
-                    <TableCell className="text-muted-foreground">
+                    <TableCell className="text-muted-foreground p-1">
                       {session.startedAt.toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
@@ -196,10 +195,10 @@ export default function Dashboard() {
             <CardTitle>Your Agents</CardTitle>
             <CardDescription>Manage and monitor your AI agents</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 ">
             {mockData.agents.map((agent) => (
               <div key={agent._id} className="flex items-center justify-between space-x-4">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-start space-x-4">
                   <Avatar>
                     <AvatarImage src={agent.avatarUrl || "/placeholder.svg"} alt={agent.name} />
                     <AvatarFallback>
@@ -210,9 +209,9 @@ export default function Dashboard() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="space-y-1">
-                    <p className="text-sm font-medium leading-none">{agent.name}</p>
-                    <p className="text-sm text-muted-foreground">{agent.persona}</p>
-                    <div className="flex items-center space-x-2">
+                    <p className="text-xs font-medium leading-none">{agent.name}</p>
+                    <p className="text-xs text-muted-foreground">{agent.persona}</p>
+                    <div className="flex flex-col md:flex-row items-start justify-start gap-2">
                       <Badge variant="outline" className="text-xs">
                         {agent.collaborators} collaborators
                       </Badge>
