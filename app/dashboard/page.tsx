@@ -9,7 +9,6 @@ import { Progress } from "@/components/ui/progress"
 import { Users, Bot, MessageSquare, Activity, Plus, TrendingUp, Settings, MoreHorizontal } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useSession } from "next-auth/react"
-import { use } from "react"
 
 // Mock data based on the schema
 const mockData = {
