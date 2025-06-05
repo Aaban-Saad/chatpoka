@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -6,6 +8,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { Users, Bot, MessageSquare, Activity, Plus, TrendingUp, Settings, MoreHorizontal } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useSession } from "next-auth/react"
+import { use } from "react"
 
 // Mock data based on the schema
 const mockData = {
@@ -85,13 +89,15 @@ const mockData = {
 }
 
 export default function Dashboard() {
+  const {data: session} = useSession()
+
   return (
     <div className="space-y-6 p-6 ">
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start justify-start gap-3 md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back, {mockData.user.name}</p>
+          <p className="text-muted-foreground">Welcome back, {session?.user?.name}</p>
         </div>
         <div className="flex items-center space-x-2">
           <Button>

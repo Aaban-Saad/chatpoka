@@ -31,6 +31,8 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { log } from "console"
+import { logout } from "@/lib/auth"
 
 // Menu items based on the schema structure
 const data = {
@@ -203,7 +205,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Settings className="mr-2 h-4 w-4" />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => logout()}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </DropdownMenuItem>

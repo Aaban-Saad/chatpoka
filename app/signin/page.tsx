@@ -9,17 +9,20 @@ import Image from 'next/image';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { StarsBackground } from '@/components/ui/stars-background';
 import { Spotlight } from '@/components/ui/spotlight-new';
+import { login } from '@/lib/auth';
+import { useSession } from "next-auth/react"
 
-export default function AuthPage() {
+export default function SignInPage() {
   const router = useRouter();
+  const {data: session} = useSession();
 
   // Example social auth handlers (replace with your actual logic)
   const handleGoogleSignIn = () => {
-    router.push('/dashboard');
+    login("google");
   };
 
-  const handleGithubSignIn = () => {
-    router.push('/dashboard');
+  const handleGithubSignIn = async () => {
+    login("github")
   };
 
   const handleFacebookSignIn = () => {
