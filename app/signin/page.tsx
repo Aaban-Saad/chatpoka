@@ -24,7 +24,7 @@ export default function SignInPage() {
   };
 
   const handleFacebookSignIn = () => {
-    router.push('/dashboard');
+    login("facebook")
   };
 
   return (
