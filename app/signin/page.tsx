@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -9,23 +9,51 @@ import Image from 'next/image';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { StarsBackground } from '@/components/ui/stars-background';
 import { Spotlight } from '@/components/ui/spotlight-new';
+import { useSession } from 'next-auth/react'; // Use next-auth for better handling
 import { login } from '@/lib/auth';
 
 export default function SignInPage() {
+  const { data: session, status } = useSession()
   const router = useRouter();
 
-  // Example social auth handlers (replace with your actual logic)
-  const handleGoogleSignIn = () => {
-    login("google");
+  const saveUserToMongo = async (userData: any) => {
+    try {
+      const response = await fetch('/api/users/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userData.email,
+          name: userData.name,
+        }),
+      });
+      if (!response.ok) {
+        console.error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("✅ User stored:", data);
+    } catch (err) {
+      console.error("❌ Failed to store user:", err);
+    }
   };
 
-  const handleGithubSignIn = async () => {
-    login("github")
+  const handleSignIn = async (provider: string) => {
+    try {
+      await login(provider)
+
+    } catch (err) {
+      console.error("Sign-in error:", err);
+    }
   };
 
-  const handleFacebookSignIn = () => {
-    login("facebook")
-  };
+  // Check if user is authenticated and save to MongoDB
+  // This effect runs when the session status changes
+  useEffect(() => {
+    if (status === "authenticated" && session?.user) {
+      saveUserToMongo(session?.user);
+    }
+  }, [status])
 
   return (
     <>
@@ -48,7 +76,7 @@ export default function SignInPage() {
             </CardHeader>
             <CardContent className='space-y-4'>
               <button
-                onClick={handleGoogleSignIn}
+                onClick={() => handleSignIn('google')}
                 className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 font-semibold py-2 rounded-lg transition duration-200"
               >
                 <span className="mr-2">
@@ -58,7 +86,7 @@ export default function SignInPage() {
                 Sign in with Google
               </button>
               <button
-                onClick={handleFacebookSignIn}
+                onClick={() => handleSignIn('facebook')}
                 className="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 font-semibold py-2 rounded-lg transition duration-200"
               >
                 <span className="mr-2">
@@ -70,7 +98,7 @@ export default function SignInPage() {
                 Sign in with Facebook
               </button>
               <button
-                onClick={handleGithubSignIn}
+                onClick={() => handleSignIn('github')}
                 className="w-full flex items-center justify-center bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 rounded-lg transition duration-200"
               >
                 <span className="mr-2">
