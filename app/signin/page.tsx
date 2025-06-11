@@ -11,12 +11,13 @@ import { StarsBackground } from '@/components/ui/stars-background';
 import { Spotlight } from '@/components/ui/spotlight-new';
 import { useSession } from 'next-auth/react'; // Use next-auth for better handling
 import { login } from '@/lib/auth';
+import { User } from 'next-auth';
 
 export default function SignInPage() {
   const { data: session, status } = useSession()
   const router = useRouter();
 
-  const saveUserToMongo = async (userData: any) => {
+  const saveUserToMongo = async (userData: User) => {
     try {
       const response = await fetch('/api/users/create', {
         method: 'POST',
