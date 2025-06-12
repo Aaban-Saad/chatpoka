@@ -89,7 +89,6 @@ const mockData = {
 
 export default function Dashboard() {
   const {data: session} = useSession()
-  console.log("user data", session?.user)
 
   return (
     <div className="space-y-6 p-6 ">

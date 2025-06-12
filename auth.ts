@@ -16,9 +16,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // This callback is fired when a JWT is created or updated
     async jwt({ token, user, account, profile }) {
       // 'user' is only available the first time this callback is called on a new session (after sign-in)
-      // If a database adapter is used, 'user' will contain the ID from your database.
+
       if (user) {
-        token.id = user.id; // Assign the user's ID to the token
+        token.id = account?.providerAccountId || user.id // Assign the user's ID to the token;
+        token.provider = account?.provider // Assign the user's ID to the token
+        console.log("\n\n\n   account", account);
+        console.log("\n\n\n   profile", profile);
       }
       return token;
     },
@@ -27,9 +30,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // The 'token' here is the one returned from the 'jwt' callback
       // We assign the ID from the token to the session user object
       if (session.user) {
-        session.user.id = token.id as string; // Ensure proper typing if using TypeScript
+        session.user.id = token.id as string;
+        session.user.provider = token.provider; // Add provider to session user
       }
       return session;
     },
   },
 })
+

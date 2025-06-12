@@ -38,8 +38,5 @@ export async function connectToDatabase(): Promise<Mongoose> {
 
     cached.conn = await cached.promise;
 
-    console.log(">>>>>>>>>> Connected to MongoDB <<<<<<<<");
-    // Uncomment the line below to enable Mongoose debug mode
-
     return cached.conn;
 }
