@@ -10,7 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { StarsBackground } from '@/components/ui/stars-background';
 import { Spotlight } from '@/components/ui/spotlight-new';
 import { useSession } from 'next-auth/react'; // Use next-auth for better handling
-import { login, logout } from '@/lib/auth';
+import { login } from '@/lib/auth';
 import { User } from 'next-auth';
 
 export default function SignInPage() {

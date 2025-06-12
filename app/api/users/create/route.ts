@@ -31,7 +31,6 @@ export async function POST(request: Request) {
     }
     return new Response(JSON.stringify({ message: "User stored", user }), { status: 200 });
   } catch (err) {
-
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Internal Server Error\n" + err }), { status: 500 });
   }
 }
