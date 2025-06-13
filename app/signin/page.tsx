@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -9,39 +9,38 @@ import Image from 'next/image';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { StarsBackground } from '@/components/ui/stars-background';
 import { Spotlight } from '@/components/ui/spotlight-new';
-import { useSession } from 'next-auth/react'; // Use next-auth for better handling
+// import { useSession } from 'next-auth/react'; // Use next-auth for better handling
 import { login } from '@/lib/auth';
-import { User } from 'next-auth';
 
 export default function SignInPage() {
-  const { data: session, status } = useSession()
+  // const { data: session, status } = useSession()
   const router = useRouter();
 
-  const saveUserToMongo = async (userData: User) => {
-    try {
-      const response = await fetch('/api/users/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: userData.email,
-          name: userData.name,
-          provider: userData.provider || 'next-auth',
-          image: userData.image || '',
-          providerAccountId: userData.id || '', // Ensure you have an ID to store
-          lastSignIn: new Date(),
-        }),
-      });
-      if (!response.ok) {
-        console.error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log("✅ User stored:", data);
-    } catch (err) {
-      console.error("❌ Failed to store user:", err);
-    }
-  };
+  // const saveUserToMongo = async (userData: User) => {
+  //   try {
+  //     const response = await fetch('/api/users/create', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         email: userData.email,
+  //         name: userData.name,
+  //         provider: userData.provider || 'next-auth',
+  //         image: userData.image || '',
+  //         providerAccountId: userData.id || '', // Ensure you have an ID to store
+  //         lastSignIn: new Date(),
+  //       }),
+  //     });
+  //     if (!response.ok) {
+  //       console.error(`HTTP error! status: ${response.status}`);
+  //     }
+  //     const data = await response.json();
+  //     console.log("✅ User stored:", data);
+  //   } catch (err) {
+  //     console.error("❌ Failed to store user:", err);
+  //   }
+  // };
 
   const handleSignIn = async (provider: string) => {
     try {
@@ -54,11 +53,11 @@ export default function SignInPage() {
 
   // Check if user is authenticated and save to MongoDB
   // This effect runs when the session status changes
-  useEffect(() => {
-    if (status === "authenticated" && session?.user) {
-      saveUserToMongo(session?.user);
-    }
-  }, [status])
+  // useEffect(() => {
+  //   if (status === "authenticated" && session?.user) {
+  //     saveUserToMongo(session?.user);
+  //   }
+  // }, [status])
 
   return (
     <>

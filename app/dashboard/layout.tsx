@@ -1,44 +1,38 @@
-'use client'
-
 import type React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/dashboard/app-sidebar"
 import Navbar from "@/components/dashboard/navbar"
 import { ScrollArea } from "@/components/ui/scroll-area"
-
-import { useSession } from "next-auth/react"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { logout } from "@/lib/auth"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { auth, signOut } from "@/auth"
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import Image from "next/image"
 import { ArrowLeftRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
 
   children,
 }: {
   children: React.ReactNode
 }) {
 
-  const { data: session, status } = useSession()
-  const router = useRouter()
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/signin")
+  const session = await auth()
+
+  if (!session) {
+    if (typeof window !== "undefined") {
+      window.location.href = "/signin"
+      return null
     }
-  }, [status, router])
 
-
-  if (status !== "authenticated") {
-    return null // or a loading spinner
+    const { redirect } = await import("next/navigation")
+    redirect("/signin")
   }
 
-  else if (status === "authenticated" && !session?.user.email) {
+
+  if (!session?.user.email) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen p-5">
         <Card className="w-full max-w-md p-6">
           <CardHeader>
             <div className="flex items-center justify-center space-x-4 mb-4">
@@ -88,12 +82,14 @@ export default function DashboardLayout({
           </CardContent>
 
           <CardFooter>
-            <Button
-              variant="outline"
-              onClick={() => logout()}
+            <form
+              action={async () => {
+                "use server"
+                await signOut()
+              }}
             >
-              Sign Out
-            </Button>
+              <Button type="submit">Sign Out</Button>
+            </form>
           </CardFooter>
         </Card>
       </div>
