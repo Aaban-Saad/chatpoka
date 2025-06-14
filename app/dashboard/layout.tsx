@@ -16,8 +16,28 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
 
-
   const session = await auth()
+
+  const updateUserLastSeenToMongo = async (email: string) => {
+    try {
+      const response = await fetch(process.env.AUTH_URL+'/api/users/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
+      if (!response.ok) {
+        console.error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("✅ User stored:", data);
+    } catch (err) {
+      console.error("❌ Failed to store user:", err);
+    }
+  };
 
   if (!session) {
     if (typeof window !== "undefined") {
@@ -28,6 +48,7 @@ export default async function DashboardLayout({
     const { redirect } = await import("next/navigation")
     redirect("/signin")
   }
+
 
 
   if (!session?.user.email) {
@@ -95,6 +116,8 @@ export default async function DashboardLayout({
       </div>
     )
   }
+
+  updateUserLastSeenToMongo(session.user.email)
 
   return (
     <SidebarProvider className="overflow-hidden">

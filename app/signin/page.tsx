@@ -18,7 +18,7 @@ export default function SignInPage() {
 
   // const saveUserToMongo = async (userData: User) => {
   //   try {
-  //     const response = await fetch('/api/users/create', {
+  //     const response = await fetch('/api/users/update', {
   //       method: 'POST',
   //       headers: {
   //         'Content-Type': 'application/json',
