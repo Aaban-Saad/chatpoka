@@ -18,7 +18,9 @@ export default async function DashboardLayout({
 
   const session = await auth()
 
-  const updateUserLastSeenToMongo = async (email: string) => {
+  console.log("Session in DashboardLayout:", session?.user.id)
+
+  const updateUserLastSeenToMongo = async () => {
     try {
       const response = await fetch(process.env.AUTH_URL+'/api/users/update', {
         method: 'POST',
@@ -26,18 +28,41 @@ export default async function DashboardLayout({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: email,
+          user: session?.user,
         }),
       });
       if (!response.ok) {
         console.error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
-      console.log("✅ User stored:", data);
+      // const data = await response.json();
+      // console.log("✅ User stored:", data);
     } catch (err) {
       console.error("❌ Failed to store user:", err);
     }
   };
+
+  const createTenant = async () => {
+    const firstName = session?.user.name?.split(" ")[0] || "User";
+    const workspaceName = `${firstName}'s workspace`;
+
+    const response = await fetch(process.env.AUTH_URL + "/api/tenants/create", {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+      creatorsId: session?.user.id,
+      name: workspaceName,
+      plan: "free" // Default plan, can be changed later
+      }),
+    });
+  
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to create tenant");
+    }
+    return data;
+  }
 
   if (!session) {
     if (typeof window !== "undefined") {
@@ -117,7 +142,8 @@ export default async function DashboardLayout({
     )
   }
 
-  updateUserLastSeenToMongo(session.user.email)
+  updateUserLastSeenToMongo()
+  createTenant()
 
   return (
     <SidebarProvider className="overflow-hidden">
