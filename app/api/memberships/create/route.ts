@@ -9,7 +9,8 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     console.log("\n\n\nReceived body:", body);
-    let { userId, role, tenantId } = body;
+    const { userId, role } = body;
+    let { tenantId } = body;
 
 
     if (!userId) {
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
 
     if (!tenantId) {
       const databaseTenant = await Tenant.findOne({ creatorsId: userId });
-      
+
       if (!databaseTenant) {
         return new Response(JSON.stringify({ error: "Tenant does not exist for this user." }), { status: 400 });
       }
