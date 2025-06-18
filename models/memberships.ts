@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types, models } from 'mongoose';
 
 // Enum for membership roles
 export enum MembershipRole {
@@ -42,5 +42,5 @@ const membershipSchema = new Schema<IMembership>({
 // Create a compound unique index on userId and tenantId
 membershipSchema.index({ userId: 1, tenantId: 1 }, { unique: true });
 
-export const Membership = model<IMembership>('Membership', membershipSchema);
+export const Membership = models.Membership || model<IMembership>('Membership', membershipSchema);
 

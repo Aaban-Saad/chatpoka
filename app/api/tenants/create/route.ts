@@ -1,6 +1,6 @@
 
 import { connectToDatabase } from "@/lib/mongodb";
-import Tenant from "@/models/tenants";
+import { Tenant } from "@/models/tenants";
 
 export async function POST(request: Request) {
   try {

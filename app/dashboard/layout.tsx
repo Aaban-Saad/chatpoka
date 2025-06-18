@@ -8,6 +8,8 @@ import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import Image from "next/image"
 import { ArrowLeftRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { TenantPlan } from "@/models/tenants"
+import { MembershipRole } from "@/models/memberships"
 
 export default async function DashboardLayout({
 
@@ -21,48 +23,45 @@ export default async function DashboardLayout({
   console.log("Session in DashboardLayout:", session?.user.id)
 
   const updateUserLastSeenToMongo = async () => {
-    try {
-      const response = await fetch(process.env.AUTH_URL+'/api/users/update', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: session?.user,
-        }),
-      });
-      if (!response.ok) {
-        console.error(`HTTP error! status: ${response.status}`);
-      }
-      // const data = await response.json();
-      // console.log("✅ User stored:", data);
-    } catch (err) {
-      console.error("❌ Failed to store user:", err);
-    }
+    await fetch(process.env.AUTH_URL + '/api/users/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: session?.user,
+      }),
+    });
   };
 
   const createTenant = async () => {
     const firstName = session?.user.name?.split(" ")[0] || "User";
     const workspaceName = `${firstName}'s workspace`;
-
-    const response = await fetch(process.env.AUTH_URL + "/api/tenants/create", {
+    await fetch(process.env.AUTH_URL + "/api/tenants/create", {
       method: "POST",
       headers: {
-      "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-      creatorsId: session?.user.id,
-      name: workspaceName,
-      plan: "free" // Default plan, can be changed later
+      body: JSON.stringify({
+        creatorsId: session?.user.id,
+        name: workspaceName,
+        plan: TenantPlan.FREE // Default plan, can be changed later
       }),
     });
-  
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.error || "Failed to create tenant");
-    }
-    return data;
   }
+
+  const createMembership = async () => {
+    await fetch(process.env.AUTH_URL + "/api/memberships/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: session?.user.id,
+        role: MembershipRole.ADMIN
+      }),
+    });
+  };
 
   if (!session) {
     if (typeof window !== "undefined") {
@@ -142,8 +141,9 @@ export default async function DashboardLayout({
     )
   }
 
-  updateUserLastSeenToMongo()
-  createTenant()
+  await updateUserLastSeenToMongo()
+  await createTenant()
+  await createMembership()
 
   return (
     <SidebarProvider className="overflow-hidden">

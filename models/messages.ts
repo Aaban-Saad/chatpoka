@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types, models } from 'mongoose';
 
 export enum MessageSender {
     USER = 'user',
@@ -45,5 +45,5 @@ const messageSchema = new Schema<IMessage>({
 // Compound index for efficient message retrieval within a session
 messageSchema.index({ sessionId: 1, timestamp: -1 });
 
-export const Message = model<IMessage>('Message', messageSchema);
+export const Message = models.Message || model<IMessage>('Message', messageSchema);
 
