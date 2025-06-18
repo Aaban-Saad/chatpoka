@@ -9,7 +9,6 @@ import {
   BarChart3,
   Wrench,
   LogOut,
-  Building2,
   User,
   ChevronUp,
   Plus,
@@ -33,19 +32,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { logout } from "@/lib/auth"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
+import { IMembership } from "@/models/memberships"
+import { Skeleton } from "../ui/skeleton"
 
 // Menu items based on the schema structure
 const data = {
-  user: {
-    name: "John Doe",
-    email: "john@acme.com",
-    avatar: "/placeholder.svg?height=32&width=32",
-    role: "admin" as const,
-  },
-  tenant: {
-    name: "Acme Corp",
-    plan: "pro" as const,
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -82,7 +75,68 @@ const data = {
   ],
 }
 
+interface tenantMembership extends IMembership {
+  tenantName?: string | null
+  plan?: string | null
+  image?: string | null
+}
+
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const { data: session } = useSession()
+
+  const [memberships, setMemberships] = useState<tenantMembership[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    if (!session?.user?.id) return;
+
+    fetch("/api/memberships/get", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: session.user.id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setMemberships(data)
+      })
+      .catch((error) => {
+        console.error("Error fetching memberships:", error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [session])
+
+  if (loading) {
+    return (
+      <Sidebar variant="floating" collapsible="icon" {...props}>
+        <SidebarHeader>
+          <div className="flex items-center gap-3 w-full">
+            <Skeleton className="w-8 h-8 rounded-lg" />
+            <div className="flex flex-col flex-1 gap-1">
+              <Skeleton className="h-4 w-24 rounded" />
+              <Skeleton className="h-3 w-16 rounded" />
+            </div>
+            <Skeleton className="w-5 h-5 rounded" />
+          </div>
+          <div className="mt-10">
+            <Skeleton className="mt-4 h-4 w-32 rounded" />
+            <Skeleton className="mt-4 h-4 w-32 rounded" />
+            <Skeleton className="mt-4 h-4 w-32 rounded" />
+            <Skeleton className="mt-4 h-4 w-32 rounded" />
+          </div>
+        </SidebarHeader>
+      </Sidebar>
+    )
+  }
+
   return (
     <Sidebar variant="floating" collapsible="icon" {...props}>
       <SidebarHeader>
@@ -95,11 +149,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                    <Building2 className="size-4" />
+                    <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={memberships[0]?.image || "/placeholder.svg"} alt={"user image"} />
+                    <AvatarFallback className="rounded-lg">
+                      {(memberships[0]?.tenantName ?? "Aaban Saad")
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        }
+                    </AvatarFallback>
+                  </Avatar>
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">{data.tenant.name}</span>
-                    <span className="truncate text-xs capitalize">{data.tenant.plan} Plan</span>
+                    <span className="truncate font-semibold">{memberships[0]?.tenantName}</span>
+                    <span className="truncate text-xs capitalize">{memberships[0]?.plan} plan</span>
                   </div>
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
@@ -111,7 +174,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 sideOffset={4}
               >
                 <DropdownMenuItem>
-                  <Building2 className="mr-2 h-4 w-4" />
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={memberships[0]?.image || "/placeholder.svg"} alt={"user image"} />
+                    <AvatarFallback className="rounded-lg">
+                      {(memberships[0]?.tenantName ?? "Aaban Saad")
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        }
+                    </AvatarFallback>
+                  </Avatar>
                   Tenant Settings
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -171,21 +243,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={data.user.avatar || "/placeholder.svg"} alt={data.user.name} />
+                    <AvatarImage src={session?.user.image || "/placeholder.svg"} alt={"user image"} />
                     <AvatarFallback className="rounded-lg">
-                      {data.user.name
+                      {(session?.user?.name ?? "Aaban Saad")
                         .split(" ")
                         .map((n) => n[0])
-                        .join("")}
+                        .join("")
+                        }
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">{data.user.name}</span>
-                    <span className="truncate text-xs">{data.user.email}</span>
+                    <span className="truncate font-semibold">{session?.user.name}</span>
+                    <span className="truncate text-xs">{session?.user.email}</span>
                   </div>
                   <div className="flex items-center">
                     <Badge variant="outline" className="text-xs capitalize">
-                      {data.user.role}
+                      {/* {data.user.role} */}
                     </Badge>
                     <ChevronUp className="ml-2" />
                   </div>
