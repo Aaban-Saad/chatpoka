@@ -1,9 +1,10 @@
 'use client'
 
+import { ChatbotCreator } from "@/components/dashboard/chatbot-creator"
 import { Button } from "@/components/ui/button"
 import { Card, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Calendar, Edit, MessageSquare, Plus } from "lucide-react"
+import { Calendar, Edit, MessageSquare } from "lucide-react"
 
 export default function AgentsPage() {
   return (
@@ -14,10 +15,11 @@ export default function AgentsPage() {
           <p className="text-muted-foreground">Create and manage your AI Agents</p>
         </div>
         <div className="flex items-center space-x-2">
-          <Button>
+          {/* <Button>
             <Plus className="mr-2 h-4 w-4" />
             New Agent
-          </Button>
+          </Button> */}
+          <ChatbotCreator />
         </div>
       </div>
 

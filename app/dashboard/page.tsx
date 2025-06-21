@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import { Users, Bot, MessageSquare, Activity, Plus, TrendingUp, Settings, MoreHorizontal } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useSession } from "next-auth/react"
+import { ChatbotCreator } from "@/components/dashboard/chatbot-creator"
 
 // Mock data based on the schema
 const mockData = {
@@ -99,10 +100,11 @@ export default function Dashboard() {
           <p className="text-muted-foreground">Welcome back, {session?.user?.name}</p>
         </div>
         <div className="flex items-center space-x-2">
-          <Button>
+          {/* <Button>
             <Plus className="mr-2 h-4 w-4" />
             New Agent
-          </Button>
+          </Button> */}
+          <ChatbotCreator />
         </div>
       </div>
 

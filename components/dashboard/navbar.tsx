@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
 
   // Build breadcrumb items
   const breadcrumbs = [
-    { label: "Home", href: "/" },
+    { label: "Chatpoka", href: "/" },
     ...pathSegments.map((segment, idx) => {
       const href = "/" + pathSegments.slice(0, idx + 1).join("/");
       return {

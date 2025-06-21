@@ -150,15 +150,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 >
                   <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                     <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={memberships[0]?.image || "/placeholder.svg"} alt={"user image"} />
-                    <AvatarFallback className="rounded-lg">
-                      {(memberships[0]?.tenantName ?? "Aaban Saad")
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
+                      <AvatarImage src={memberships[0]?.image || "/placeholder.svg"} alt={"user image"} />
+                      <AvatarFallback className="rounded-lg">
+                        {(memberships[0]?.tenantName ?? "Aaban Saad")
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
                         }
-                    </AvatarFallback>
-                  </Avatar>
+                      </AvatarFallback>
+                    </Avatar>
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">{memberships[0]?.tenantName}</span>
@@ -181,7 +181,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         .split(" ")
                         .map((n) => n[0])
                         .join("")
-                        }
+                      }
                     </AvatarFallback>
                   </Avatar>
                   Tenant Settings
@@ -198,7 +198,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {data.navMain.map((item) => (
@@ -249,7 +249,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         .split(" ")
                         .map((n) => n[0])
                         .join("")
-                        }
+                      }
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
@@ -258,7 +258,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </div>
                   <div className="flex items-center">
                     <Badge variant="outline" className="text-xs capitalize">
-                      {/* {data.user.role} */}
+                      {memberships[0]?.role}
                     </Badge>
                     <ChevronUp className="ml-2" />
                   </div>
