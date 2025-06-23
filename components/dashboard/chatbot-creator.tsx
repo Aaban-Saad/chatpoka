@@ -18,9 +18,9 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Slider } from "@/components/ui/slider"
 import { Card, CardContent } from "@/components/ui/card"
-import { Upload, Bot, Settings, FileText, User, Thermometer, Plus } from "lucide-react"
+import { Upload, Bot, Settings, FileText, User, Thermometer } from "lucide-react"
 
-export function ChatbotCreator() {
+export function ChatbotCreator({ trigger }: { trigger: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const [temperature, setTemperature] = useState([0.7])
   const [formData, setFormData] = useState({
@@ -48,19 +48,16 @@ export function ChatbotCreator() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          New Agent
-        </Button>
+       <DialogTrigger asChild>
+        {trigger}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Bot className="h-5 w-5" />
-            Create Custom Chatbot
+            Create AI Chat Agent
           </DialogTitle>
-          <DialogDescription>Configure your AI chatbot with custom settings and training data.</DialogDescription>
+          <DialogDescription>Configure your AI agent with custom settings and training data.</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -74,7 +71,7 @@ export function ChatbotCreator() {
                 </div>
 
                 <div className="grid gap-3">
-                  <Label htmlFor="chatbot-name">Chatbot Name</Label>
+                  <Label htmlFor="chatbot-name">Agent Name</Label>
                   <Input
                     id="chatbot-name"
                     placeholder="e.g., Customer Support Bot"

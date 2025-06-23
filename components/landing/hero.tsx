@@ -2,9 +2,12 @@ import Image from "next/image";
 import { Spotlight } from "../ui/spotlight-new";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { auth } from "@/auth";
 
-export default function Hero() {
+export default async function Hero() {
+
+  const session = await auth();
+
   return (
     <section className="max-w-screen-2xl mx-auto mt-24 md:mt-36 px-5 md:px-16 ">
 
@@ -27,7 +30,7 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col md:flex-row items-center gap-3">
-            <Link href="/signin">
+            <a href= {session?.user ? "/dashboard" : "/signin"}>
               <Button
                 size="lg"
                 variant="hero"
@@ -36,7 +39,7 @@ export default function Hero() {
                 Get Started Today
                 <ArrowRight className="w-5 h-5 ml-1" />
               </Button>
-            </Link>
+            </a>
 
             <Button
               size="lg"

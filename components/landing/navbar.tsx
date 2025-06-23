@@ -16,7 +16,7 @@ const Navbar: React.FC = async () => {
               src="/images/logo.png"
               alt="Logo"
               width={150}
-              height={100}
+              height={32}
               className="inline-block"
             />
           </Link>
@@ -43,32 +43,32 @@ const Navbar: React.FC = async () => {
 
           {session ? (
             <>
-              <Link
+              <a
                 href="/dashboard/agents"
                 className="rounded bg-primary-primary text-white hover:bg-primary-700 transition-colors"
               >
                 <Button variant="hero" className="rounded-full font-semibold">
                   My Agents
                 </Button>
-              </Link>
-              <Link
+              </a>
+              {/* <a
                 href="/dashboard"
                 className="rounded bg-primary-primary text-white hover:bg-primary-700 transition-colors"
               >
                 <Button variant="hero" className="rounded-full font-semibold">
                   Dashboard
                 </Button>
-              </Link>
+              </a> */}
             </>
           ) : (
-            <Link
+            <a
               href="/signin"
               className="rounded bg-primary-primary text-white hover:bg-primary-700 transition-colors"
             >
               <Button variant="hero" className="rounded-full font-semibold">
                 Sign In
               </Button>
-            </Link>
+            </a>
           )}
         </div>
       </div>

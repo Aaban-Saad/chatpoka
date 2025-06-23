@@ -2,9 +2,8 @@
 
 import { ChatbotCreator } from "@/components/dashboard/chatbot-creator"
 import { Button } from "@/components/ui/button"
-import { Card, CardFooter, CardHeader } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Calendar, Edit, MessageSquare } from "lucide-react"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Calendar, Edit, MessageSquare, Plus, PlusCircle } from "lucide-react"
 
 export default function AgentsPage() {
   return (
@@ -15,15 +14,19 @@ export default function AgentsPage() {
           <p className="text-muted-foreground">Create and manage your AI Agents</p>
         </div>
         <div className="flex items-center space-x-2">
-          {/* <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            New Agent
-          </Button> */}
-          <ChatbotCreator />
+          <ChatbotCreator
+            trigger={
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                New Agent
+              </Button>
+            }
+          />
+
         </div>
       </div>
 
-      <Input placeholder={"Search agents by name..."} className="py-5" />
+      {/* <Input placeholder={"Search agents by name..."} className="py-5" /> */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Placeholder for agent cards */}
@@ -67,6 +70,21 @@ export default function AgentsPage() {
             </Button>
           </CardFooter>
         </Card>
+
+        <ChatbotCreator trigger={
+          <Card className="cursor-pointer hover:bg-muted transition-colors duration-200 ease-in-out">
+            <CardHeader>
+              <h2 className="truncate text-lg text-center">Create New Chat Agent</h2>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-center">
+                <PlusCircle width={50} height={50} strokeWidth={0.75} className="text-muted-foreground" />
+              </div>
+              <div>
+              </div>
+            </CardContent>
+          </Card>
+        } />
 
       </div>
     </div>

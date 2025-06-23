@@ -41,11 +41,6 @@ import { Skeleton } from "../ui/skeleton"
 const data = {
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: BarChart3,
-    },
-    {
       title: "Agents",
       url: "/dashboard/agents",
       icon: Bot,
@@ -65,6 +60,11 @@ const data = {
       url: "/dashboard/tools",
       icon: Wrench,
     },
+    {
+      title: "Activities",
+      url: "/dashboard/activities",
+      icon: BarChart3,
+    }
   ],
   navSecondary: [
     {
