@@ -115,7 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       .finally(() => {
         setLoading(false)
       })
-  }, [session, route])
+  }, [session?.user, route])
 
   if (loading) {
     return (
