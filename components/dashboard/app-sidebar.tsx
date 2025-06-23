@@ -95,6 +95,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   useEffect(() => {
     setLoading(true)
     if (!session?.user?.id) return;
+    if (memberships.length > 0) return;
 
     fetch("/api/memberships/get", {
       method: "POST",
