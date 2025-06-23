@@ -93,10 +93,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setLoading(true)
     if (!session?.user?.id) return;
     if (memberships.length > 0) return;
-
+    
+    setLoading(true)
+    
     fetch("/api/memberships/get", {
       method: "POST",
       headers: {
@@ -116,7 +117,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       .finally(() => {
         setLoading(false)
       })
-  }, [session?.user, route])
+  }, [session, route])
 
   if (loading) {
     return (
