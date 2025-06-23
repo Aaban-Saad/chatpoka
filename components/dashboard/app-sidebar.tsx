@@ -36,6 +36,7 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { IMembership } from "@/models/memberships"
 import { Skeleton } from "../ui/skeleton"
+import { useRouter } from "next/navigation"
 
 // Menu items based on the schema structure
 const data = {
@@ -84,6 +85,8 @@ interface tenantMembership extends IMembership {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
+  const route = useRouter()
+
   const { data: session } = useSession()
 
   const [memberships, setMemberships] = useState<tenantMembership[]>([])
@@ -112,7 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       .finally(() => {
         setLoading(false)
       })
-  }, [session])
+  }, [session, route])
 
   if (loading) {
     return (
